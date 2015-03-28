@@ -235,98 +235,7 @@
     </section>
 
     <!-- About Section -->
-    <section id="about">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <h2 class="section-heading">About</h2>
-                    <h3 class="section-subheading text-muted">We're changing the landscape of recruiting one day at a time.</h3>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12">
-                    <ul class="timeline">
-                      <li>
-                            <div class="timeline-image">
-                                <img class="img-circle img-responsive" src="img/about/1.jpg" alt="">
-                            </div>
-                            <div class="timeline-panel">
-                                <div class="timeline-heading">
-                                    <h4>2008</h4>
-                                    <h4 class="subheading">Our Humble Beginnings</h4>
-                                </div>
-                                <div class="timeline-body">
-                                    <p class="text-muted">With a dollar and a dream, Matt Alling leaves the corporate world to start Calvin Group.</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="timeline-inverted">
-                            <div class="timeline-image">
-                                 <img class="img-circle img-responsive" src="img/about/2.jpg" alt="">
-                            </div>
-                            <div class="timeline-panel">
-                                <div class="timeline-heading">
-                                    <h4>2010</h4>
-                                    <h4 class="subheading">Rapid Growth</h4>
-                                </div>
-                                <div class="timeline-body">
-                                    <p class="text-muted">Calvin Group is named to Inc. Magazine's <span style="white-space: nowrap;"><i>The Inc. 500</i> (the 500 fastest growing companies in America).</span><br/>170th fastest growing in the US.<br/>12th fastest growing in the Staffing Industry.<br />14th fastest growing in Los Angeles.</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="timeline-image">
-                                <img class="img-circle img-responsive" src="img/about/3.jpg" alt="">
-                            </div>
-                            <div class="timeline-panel">
-                                <div class="timeline-heading">
-                                    <h4>2012</h4>
-                                    <h4 class="subheading">First Acquisition</h4>
-                                </div>
-                                <div class="timeline-body">
-                                    <p class="text-muted">Calvin Group acquires Arsenal Recruiting, an agency exclusively focused on Bay Area staffing, to expand its reach to the Greater San Francisco area.</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="timeline-inverted">
-                            <div class="timeline-image">
-                                <img class="img-circle img-responsive" src="img/about/4.jpg" alt="">
-                            </div>
-                            <div class="timeline-panel">
-                                <div class="timeline-heading">
-                                    <h4>2014</h4>
-                                    <h4 class="subheading">The Candidate Agency</h4>
-                                </div>
-                                <div class="timeline-body">
-                                    <p class="text-muted">We realized that unlike in the world of sports or film/television where the best talent has an agent that exclusively represents them, in tech there was no such agency. There is now.</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="timeline-panel">
-                            <div class="timeline-image">
-                                <h4>Be Part
-                                    <br>Of Our
-                                    <br>Story!</h4>
-                            </div>
-                            <div class="timeline-panel">
-                                <div class="timeline-heading">
-                                    <!-- <h4>Be Part
-                                    <br>Of Our
-                                    <br>Story!</h4> -->
-                                    <!-- <h4 class="subheading">Be Part of our story</h4> -->
-                                </div>
-                                <div class="timeline-body">
-                                    <!-- <p class="text-muted">
-                                      <a href="#enrollment" class="portfolio-link" data-toggle="modal">Press Here for enrollment</a>
-                                    </p> -->
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
+    <section id="about"></section>
 
     <!-- Team Section -->
     <section id="team" class="bg-light-gray template-team-render"></section>
@@ -580,7 +489,9 @@
       Handlebars.registerHelper('ifIsNthItem', function(options) {
         var index = options.data.index,
             nth = options.hash.nth;
-
+        if (options.hash.add === true) {
+          index++;
+        }
         if (index % nth === 0) {
           return options.fn(this);
         }
@@ -594,7 +505,7 @@
         return options.inverse(this);
       });</script>
     <script type="text/javascript">
-    $(document).ready(function(){
+    var renderTeam = function() {
       var source   = $("#team-template").html();
       var template = Handlebars.compile(source);
       var context = {
@@ -646,6 +557,48 @@
       };
       var html    = template(context);
       $('.template-team-render').html(html);
+    };
+
+    var renderAbout = function() {
+      var source   = $("#about-template").html();
+      var template = Handlebars.compile(source);
+      var context = {
+        heading: 'About',
+        subheading: "We're changing the landscape of recruiting one day at a time.",
+        timelineArr: [
+          {
+            img: '1.jpg',
+            head: '2008',
+            subheading: 'Our Humble Beginnings',
+            text: 'With a dollar and a dream, Matt Alling leaves the corporate world to start Calvin Group.'
+          },
+          {
+            img: '2.jpg',
+            head: '2010',
+            subheading: 'Rapid Growth',
+            text: 'Calvin Group is named to Inc. Magazine\'s <span style="white-space: nowrap;"><i>The Inc. 500</i> (the 500 fastest growing companies in America).</span><br/>170th fastest growing in the US.<br/>12th fastest growing in the Staffing Industry.<br />14th fastest growing in Los Angeles.'
+          },
+          {
+            img: '3.jpg',
+            head: '2012',
+            subheading: 'First Acquisition',
+            text: 'Calvin Group acquires Arsenal Recruiting, an agency exclusively focused on Bay Area staffing, to expand its reach to the Greater San Francisco area.'
+          },
+          {
+            img: '4.jpg',
+            head: '2014',
+            subheading: 'The Candidate Agency',
+            text: 'We realized that unlike in the world of sports or film/television where the best talent has an agent that exclusively represents them, in tech there was no such agency. There is now.'
+          }
+        ]
+      };
+      var html    = template(context);
+      $('section#about').html(html);
+    };
+
+    $(document).ready(function(){
+      renderTeam();
+      renderAbout();
     });
     </script>
 
@@ -681,6 +634,55 @@
               </div>
             </div>
         {{/each}}
+        </div>
+      </div>
+    </script>
+
+    <script id="about-template" type="text/x-handlebars-template">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 text-center">
+              <h2 class="section-heading">{{heading}}</h2>
+              <h3 class="section-subheading text-muted">{{subheading}}</h3>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <ul class="timeline">
+            {{#each timelineArr}}
+                <li
+                {{#ifIsNthItem nth=2 add=true}}
+                   class="timeline-inverted"
+                {{/ifIsNthItem}}
+                >
+
+                <div class="timeline-image">
+                  <img class="img-circle img-responsive" src="img/about/{{this.img}}" alt="">
+                </div>
+                <div class="timeline-panel">
+                  <div class="timeline-heading">
+                    <h4>{{this.head}}</h4>
+                    <h4 class="subheading">{{this.subheading}}</h4>
+                  </div>
+                  <div class="timeline-body">
+                    <p class="text-muted">{{{this.text}}}</p>
+                  </div>
+                </div>
+              </li>
+            {{/each}}
+            <li class="timeline-panel">
+              <div class="timeline-image">
+                  <h4>Be Part
+                      <br>Of Our
+                      <br>Story!</h4>
+              </div>
+              <div class="timeline-panel">
+                  <div class="timeline-heading"></div>
+                  <div class="timeline-body"></div>
+              </div>
+          </li>
+            </ul>
+          </div>
         </div>
       </div>
     </script>
